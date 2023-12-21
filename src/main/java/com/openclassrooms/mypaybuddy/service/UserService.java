@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserService extends UserDetailsService{
 	User save(UserRegistrationDto registrationDto);
 
+	User addConnexion(User user,User friend);
 }

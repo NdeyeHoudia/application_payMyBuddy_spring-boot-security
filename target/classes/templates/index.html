@@ -29,7 +29,7 @@
 				<ul class="nav navbar-nav">
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Home</a></li>
 
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/transactions}">Tranfert</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Tranfert</a></li>
 
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Profile</a></li>
 
@@ -50,11 +50,11 @@
 			</ul>
 		</div>
 	</nav>
+
 	<br>
 	<br>
-	<div>
+	<div class ="container">
 		<h2>Send Money</h2>
-		<form action="">
 			<div>
 				<form th:action="@{/index}"  method="post" th:object="${transaction}">
 
@@ -64,13 +64,22 @@
 						<button type="submit" class="btn btn-success">
 							<a href="/" th:href="@{/registration}">Add connexion</a>
 						</button>
+						<div>
+							<a th:href = "@{/registration}" class = "btn btn-primary btn-sm mb-3"> Add connexion</a>
+						</div>
 						<br>
-						<select name="username" id="username">
+						<select name="pets" id="pet-select">
 							<option value="">Select a connection</option>
-							<option value="username"><span sec:authentication="principal.username"> User</span></option>
-							<option value="username"><span sec:authentication="principal.username"> User</span></option>
+							<option value="username"> jean</option>
+							<option value="username"> ndeyea10</option>
 						</select>
-						<input id="montant" type="number" name="montant" value="0" />
+						<input id="description" type="text" name="description" placeholder="Enter description"/>
+						<input  type="number"  value="0" />
+						<input id="date" type="date" value="" name="date_transaction" />
+						<script>
+							date = new Date().toLocaleDateString();
+							document.write(date);
+						</script>
 						<input type="submit" class="btn btn-primary" value="pay">
 					</fieldset>
 					<h2>My transactions </h2>

@@ -27,34 +27,39 @@ public class User {
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-
 	@Column(name = "username")
 	private String username;
-	
+	@Column(name = "email")
 	private String email;
-	
+	@Column(name = "password")
 	private String password;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "parent", referencedColumnName = "id")
 	private User parent;
-
 	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<User> listFriends;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	public List<User> getListFriends() {
+		return listFriends;
+	}
+	public void setListFriends(List<User> listFriends) {
+		this.listFriends = listFriends;
+	}
+	/*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "users_roles",
 			joinColumns = @JoinColumn(
 		            name = "user_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(
 				            name = "role_id", referencedColumnName = "id"))
-	
+	*/
 	private Collection<Role> roles;
-	
-	public User() {
-		
-	}
-	
+
+	@OneToOne
+	@JoinColumn(name = "compte")
+	private Compte compte;
+
+	public User() {}
 	public User(String username, String email, String password, Collection<Role> roles) {
 		super();
 		this.username = username;
@@ -92,7 +97,7 @@ public class User {
 
 	public void addConnexion(User user){
 		if (user !=null){
-
+			listFriends.add(user);
 		}
 	}
 }

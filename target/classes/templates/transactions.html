@@ -34,9 +34,8 @@
 
 <div class ="container">
     <div class = "row">
-        <h1> List Transaction </h1>
+        <h1> List Transfert </h1>
     </div>
-
     <div class = "row">
         <div class = "col-lg-3">
             <a th:href = "@{/transactions/new}" class = "btn btn-primary btn-sm mb-3"> Add Transaction</a>
@@ -46,23 +45,20 @@
         <thead class = "table-dark">
         <tr>
             <th> description</th>
+            <th> Connection</th>
             <th> montant</th>
             <th> Date </th>
             <th> Actions </th>
         </tr>
         </thead>
-
-        <tbody>
+       <!-- <tbody>
         <tr th:each = "transaction: ${transactions}">
             <td th:text = "${transaction.description}"></td>
             <td th:number = ${transaction.montant}></td>
-            <td  type="date"></td>
+            <td  type="date "></td>
             <td></td>
-
-
         </tr>
-        </tbody>
-
+        </tbody>-->
     </table>
 
 </div>

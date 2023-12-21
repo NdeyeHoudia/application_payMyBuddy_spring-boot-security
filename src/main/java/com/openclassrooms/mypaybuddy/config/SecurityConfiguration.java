@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 */
 		http.authorizeRequests().antMatchers(
-				 "/registration**",
+				 "/**",
 	                "/js/**",
 	                "/css/**",
 	                "/img/**").permitAll()

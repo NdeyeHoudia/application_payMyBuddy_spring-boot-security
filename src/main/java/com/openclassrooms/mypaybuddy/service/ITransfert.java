@@ -6,7 +6,7 @@ import com.openclassrooms.mypaybuddy.model.User;
 
 public interface ITransfert {
 
-    public void transfer(Compte compteEmetteur, Compte compteRecepteur, double montant);
+    public void transfer(Compte compteEmetteur, Compte compteRecepteur, double montant,String description);
 
     Transaction saveTransfert(Transaction transaction);
 

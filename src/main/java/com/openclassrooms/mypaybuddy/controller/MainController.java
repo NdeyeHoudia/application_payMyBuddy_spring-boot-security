@@ -1,18 +1,20 @@
 package com.openclassrooms.mypaybuddy.controller;
 
 import com.openclassrooms.mypaybuddy.model.Transaction;
+import com.openclassrooms.mypaybuddy.model.User;
 import com.openclassrooms.mypaybuddy.repository.CompteRepository;
 import com.openclassrooms.mypaybuddy.repository.UserRepository;
 import com.openclassrooms.mypaybuddy.service.TransfertDetailsImpl;
+import com.openclassrooms.mypaybuddy.service.UserServiceImpl;
 import com.openclassrooms.mypaybuddy.web.dto.TransfertDto;
 import com.openclassrooms.mypaybuddy.web.dto.UserRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 
 @Controller
@@ -24,6 +26,8 @@ public class MainController {
 	private CompteRepository compteRepository;
 	@Autowired
 	TransfertDetailsImpl transfertDetails;
+	@Autowired
+	private UserServiceImpl userService;
 
 	@GetMapping("/login")
 	public String login() {
@@ -33,9 +37,29 @@ public class MainController {
 	@GetMapping("/")
 	public String home() { return "index";}
 
-	@RequestMapping(value = "/log", method = RequestMethod.GET)
-	public String loginPage(Model model) {
-		return "login";
+	@GetMapping("/registration")
+	public String listConnection(Model model) {
+		model.addAttribute("registration", userService.getAllUsers());
+		return "registration";
+	}
+	@PostMapping("/registration")
+	public String addConnection (@ModelAttribute("registrations") User friend, String username) {
+		com.openclassrooms.mypaybuddy.model.User user = userRepository.findByUsername(username);
+		//model.addAttribute(user.getListFriends());
+		userService.addConnexion(user,friend);
+		return "redirect:/registration";
+	}
+	@GetMapping("/registration/new")
+	public String getTransactionForm(Model model) {
+		Transaction  transaction= new Transaction();
+		model.addAttribute("registrations", transaction);
+		return "e";
+	}
+	@PostMapping("/save_transaction")
+	public  String saveTransaction(@ModelAttribute Transaction transaction, HttpSession session){
+		transfertDetails.saveTransfert(transaction);
+		session.setAttribute("message", "transaction ajoutée");
+		return "redirect:/add";
 	}
 
 	@GetMapping("/transactions")
@@ -43,14 +67,12 @@ public class MainController {
 		model.addAttribute("transactions", transfertDetails.getTransaction());
 		return "transactions";
 	}
-
 	@GetMapping("/transactions/new")
-	public String createStudentForm(Model model) {
+	public String createTransactionForm(Model model) {
 
-		// create student object to hold student form data
-	Transaction  transaction= new Transaction();
+		Transaction  transaction= new Transaction();
 		model.addAttribute("transaction", transaction);
-		return "create_transaction";
+		return "debit";
 	}
 
 	@PostMapping("/transactions")
@@ -59,69 +81,4 @@ public class MainController {
 		return "redirect:/transactions";
 	}
 
-	@RequestMapping(value = "/userInfo", method = RequestMethod.GET)
-	public String userInfo(Model model, Principal principal) {
-
-		// After user login successfully.
-		String userName = principal.getName();
-
-		System.out.println("User Name: " + userName);
-
-		org.springframework.security.core.userdetails.User loginedUser = (org.springframework.security.core.userdetails.User) ((Authentication) principal).getPrincipal();
-
-		//String userInfo = WebUtils.toString(loginedUser);
-		String userInfo = loginedUser.toString();
-
-		model.addAttribute("userInfo", userInfo);
-
-		return "userInfoPage";
-	}
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public String accessDenied(Model model, Principal principal) {
-
-		if (principal != null) {
-			org.springframework.security.core.userdetails.User loginedUser = (User) ((Authentication) principal).getPrincipal();
-
-			String userInfo = loginedUser.toString();
-
-			model.addAttribute("userInfo", userInfo);
-
-			String message = "Hi " + principal.getName() //
-					+ "<br>Vous n'avais pas de permission pour acceder au page!";
-			model.addAttribute("message", message);
-
-		}
-		return "403Page";
-	}
-
-
-	@GetMapping("/friend")
-	public String showUser(Model model) {
-		model.addAttribute("userList", userRepository.findAll());
-		return "friend";
-	}
-	@RequestMapping(value = "/transfer", method = RequestMethod.POST)
-	public String processSendMoney(Model model, Transaction transaction) {
-
-		System.out.println("Send Money::" + transaction.getMontant());
-
-		try {
-			transfertDetails.transfer(
-					transaction.getCompte(), transaction.getCompte(), transaction.getMontant());
-		} catch (Exception e) {
-			model.addAttribute("errorMessage", "Error: " + e.getMessage());
-			return "/index";
-		}
-		return "redirect:/";
-	}
-
-	@RequestMapping(value = "/transfer", method = RequestMethod.GET)
-	public String viewSendMoneyPage(Model model) {
-
-		TransfertDto form = new TransfertDto("ndeye", 700);
-
-		model.addAttribute("sendMoneyForm", form);
-
-		return "index";
-	}
 }

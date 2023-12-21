@@ -3,7 +3,6 @@ package com.openclassrooms.mypaybuddy.service;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.openclassrooms.mypaybuddy.repository.UserRepository;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,15 +40,23 @@ public class UserServiceImpl implements UserService {
 	public User findByUserName(String username) {
 		return userRepository.findByUsername(username);
 	}
-	public List<User> getAllUsers(){
-		return  userRepository.findAll();
-	}
+	public List<User> getAllUsers(){return  userRepository.findAll();}
 	@Override
 	public User save(UserRegistrationDto registrationDto) {
 		User user = new User(registrationDto.getUsername(), registrationDto.getEmail(),
 				passwordEncoder.encode(registrationDto.getPassword()), Arrays.asList(new Role("ROLE_USER")));
 		return userRepository.save(user);
 	}
+
+	@Override
+	public User addConnexion(User user, User friend) {
+		if (user!=null){
+			user.addConnexion(friend);
+			userRepository.save(user);
+		}
+		return user;
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	
