@@ -4,6 +4,8 @@ package com.openclassrooms.mypaybuddy.model;
 /*import lombok.EqualsAndHashCode;
 import lombok.ToString;*/
 
+import com.openclassrooms.mypaybuddy.repository.UserRepository;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -90,6 +92,7 @@ public class User {
 
 	public void addConnexion(User user){
 		if (user !=null){
+
 		}
 	}
 }

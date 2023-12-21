@@ -9,14 +9,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
-	<style>
-		/* Les descendants de rang impair sont stylés avec une couleur     */
-		tbody:nth-child(odd)  { background-color : #CED4E5; }
-		/* Les descendants de rang pair sont stylés avec une autre couleur */
-		tbody:nth-child(even) { background-color : #E8EBF5; }
-		th { background-color : #557CBA; padding:0.7em; }
-		td { padding:0.5em; }
-	</style>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 	<!-- create navigation bar ( header) -->
@@ -36,11 +29,11 @@
 				<ul class="nav navbar-nav">
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Home</a></li>
 
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Tranfert</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/transactions}">Tranfert</a></li>
 
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Profile</a></li>
 
-					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Contact</a></li>
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/friend}">Contact</a></li>
 
 					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
 				</ul>
@@ -57,16 +50,17 @@
 			</ul>
 		</div>
 	</nav>
-
 	<br>
 	<br>
 	<div>
+		<h2>Send Money</h2>
 		<form action="">
 			<div>
-				<form>
+				<form th:action="@{/index}"  method="post" th:object="${transaction}">
+
+
 					<fieldset>
 						<legend></legend>
-						<h2>Send  Money</h2>
 						<button type="submit" class="btn btn-success">
 							<a href="/" th:href="@{/registration}">Add connexion</a>
 						</button>
@@ -92,14 +86,13 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><span sec:authentication="principal.email"></span></td>
+									<td><span th:text="${username}">username</span></td>
 									<td>test</td>
 									<td>0</td>
 									<td>2023/11/10</td>
 								</tr>
 								<tr>
-									<td>                <span th:utext="${#request.userPrincipal.name}"></span>
-									</td>
+									<td><span th:utext="${#request.userPrincipal.name}"></span></td>
 									<td> <span th:if="${userInfo != null}" th:utext="${userInfo}"></span></td>
 									<td>0</td>
 									<td>2023/11/10</td>

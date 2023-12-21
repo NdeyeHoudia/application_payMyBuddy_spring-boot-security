@@ -9,12 +9,10 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
-
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
 
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-
 <body>
 <!-- create navigation bar ( header) -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -45,29 +43,21 @@
                             <h3>My Pay Buddy</h3>
                         </div>
                         <form th:action="@{/login}" method="post">
-
                             <!-- error message -->
                             <div th:if="${param.error}">
                                 <div class="alert alert-danger">Invalid username or password.</div>
                             </div>
-
-                            <!-- logout message
-                            <div th:if="${param.logout}">
-                                <div class="alert alert-info">You have been logged out.</div>
-                            </div> -->
-
-                            <div class="form-group">
-                                <label for="username"> Email </label> :
-                                <input type="text" class="form-control" id="username" name="username"
-                                       placeholder="Enter Email ID" autofocus="autofocus">
-                                <i data-feather="user"></i>
+                            <div class = "form-group">
+                                <label for ="username"> Username </label> :
+                                <input type="text" class = "form-control" id ="username" name = "username"
+                                       placeholder="Enter username" autofocus="autofocus" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="password">Password</label>:
                                 <input type="password"
                                        id="password" name="password" class="form-control"
-                                       placeholder="Enter Password"/>
+                                       placeholder="Enter Password" required/>
                                 <i data-feather="lock"></i>
 
                             </div>
@@ -82,17 +72,15 @@
                                 </div>
                             </div>
                         </form>
-                        <!--<div class="form-group">
-                                <span>New user? <a href="/" th:href="@{/registration}">Register
-                                        here</a></span>
-                        </div>-->
+                        <div class="form-group">
+                            <span>New user? <a href="/" th:href="@{/registration}">Registerhere</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 <script th:src="@{/js/feather.min.js}"></script>
 <script th:src="@{/js/app.js}"></script>

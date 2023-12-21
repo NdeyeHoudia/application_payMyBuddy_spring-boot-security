@@ -38,6 +38,16 @@ public class TransfertDetailsImpl implements ITransfert {
        }
     }
 
+    @Override
+    public Transaction saveTransfert(Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public Transaction getTransactionById(Long id) {
+        return transactionRepository.findById(Math.toIntExact(id)).get();
+    }
+
     public Iterable<Transaction> getTransaction(){
         return transactionRepository.findAll();
     }
