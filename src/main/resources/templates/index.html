@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration and Login App</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	<style>
+		/* Les descendants de rang impair sont stylés avec une couleur     */
+		tbody:nth-child(odd)  { background-color : #CED4E5; }
+		/* Les descendants de rang pair sont stylés avec une autre couleur */
+		tbody:nth-child(even) { background-color : #E8EBF5; }
+		th { background-color : #557CBA; padding:0.7em; }
+		td { padding:0.5em; }
+	</style>
+</head>
+<body>
+	<!-- create navigation bar ( header) -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}" style="background-color: #74992e">Pay My Buddy</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Home</a></li>
+
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Tranfert</a></li>
+
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Profile</a></li>
+
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Contact</a></li>
+
+					<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<nav>
+		<div>
+			<ul class="nav navbar-nav">
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Home</a></li>
+				<li sec:authorize="isAuthenticated()"><a th:href="@{/transfert}">Transfert</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<br>
+	<br>
+	<div>
+		<form action="">
+			<div>
+				<form>
+					<fieldset>
+						<legend></legend>
+						<h2>Send  Money</h2>
+						<button type="submit" class="btn btn-success">
+							<a href="/" th:href="@{/registration}">Add connexion</a>
+						</button>
+						<br>
+						<select name="username" id="username">
+							<option value="">Select a connection</option>
+							<option value="username"><span sec:authentication="principal.username"> User</span></option>
+							<option value="username"><span sec:authentication="principal.username"> User</span></option>
+						</select>
+						<input id="montant" type="number" name="montant" value="0" />
+						<input type="submit" class="btn btn-primary" value="pay">
+					</fieldset>
+					<h2>My transactions </h2>
+					<div>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">Connections</th>
+									<th scope="col">Description</th>
+									<th scope="col">Amount</th>
+									<th scope="col">Date </th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><span sec:authentication="principal.email"></span></td>
+									<td>test</td>
+									<td>0</td>
+									<td>2023/11/10</td>
+								</tr>
+								<tr>
+									<td>                <span th:utext="${#request.userPrincipal.name}"></span>
+									</td>
+									<td> <span th:if="${userInfo != null}" th:utext="${userInfo}"></span></td>
+									<td>0</td>
+									<td>2023/11/10</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
