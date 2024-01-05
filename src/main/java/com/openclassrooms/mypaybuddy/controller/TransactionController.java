@@ -4,7 +4,6 @@ import com.openclassrooms.mypaybuddy.model.Compte;
 import com.openclassrooms.mypaybuddy.model.Transaction;
 import com.openclassrooms.mypaybuddy.model.User;
 import com.openclassrooms.mypaybuddy.repository.CompteRepository;
-import com.openclassrooms.mypaybuddy.repository.UserRepository;
 import com.openclassrooms.mypaybuddy.service.TransfertDetailsImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
-//@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/trans")
 public class TransactionController {
    @Autowired
     private TransfertDetailsImpl transfertDetails;
-
    @Autowired
    public  CompteRepository compteRepository;
 
@@ -59,8 +56,6 @@ public class TransactionController {
         compte.getClient();
        return transfertDetails.getTransaction();
     }
-
-
 
 
   /*  @GetMapping("/transfert")

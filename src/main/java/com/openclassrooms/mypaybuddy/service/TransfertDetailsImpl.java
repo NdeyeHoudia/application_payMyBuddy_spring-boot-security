@@ -5,20 +5,13 @@ import com.openclassrooms.mypaybuddy.model.Compte;
 import com.openclassrooms.mypaybuddy.model.Transaction;
 import com.openclassrooms.mypaybuddy.repository.CompteRepository;
 import com.openclassrooms.mypaybuddy.repository.TransactionRepository;
-//import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
-//import static java.awt.Container.log;
 
-//import static java.awt.Container.log;
 
 
 @Service
@@ -68,21 +61,13 @@ public class TransfertDetailsImpl implements ITransfert {
     public Transaction saveTransfert(Transaction transaction) {
         return transactionRepository.save(transaction);
     }
-
-    @Override
-    public Transaction saveTransfert(Transaction transaction) {
-        return transactionRepository.save(transaction);
-    }
-
     @Override
     public Transaction getTransactionById(Long id) {
         return transactionRepository.findById(Math.toIntExact(id)).get();
     }
-
     public Iterable<Transaction> getTransaction(){
         return transactionRepository.findAll();
     }
-
     public Optional<Transaction> getTransactionById(Integer id){
         return  transactionRepository.findById(id);
     }
